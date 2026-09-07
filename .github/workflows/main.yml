@@ -14,8 +14,14 @@ jobs:
       - name: Download llama.cpp
         run: |
           mkdir -p third_party
-          git clone https://github.com/ggml-org/llama.cpp.git third_party/llama.cpp
+          git clone https://github.com/ggml-org/llama.cpp third_party/llama.cpp
           git -C third_party/llama.cpp checkout 85c55223caf0a2ad0d1d88e5a73ab3fe36107867
+
+      - name: Download Qwen model
+        run: |
+          mkdir -p app/src/main/jniLibs/arm64-v8a
+          wget -O app/src/main/jniLibs/arm64-v8a/libmodel-qwen35-08b-q40.so \
+            https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_0.gguf
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -34,5 +40,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: souchastnik-apk
+          name: souchastnik-apk-with-model
           path: app/build/outputs/apk/debug/*.apk
