@@ -11,6 +11,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download llama.cpp
+        run: |
+          mkdir -p third_party
+          git clone https://github.com/ggml-org/llama.cpp.git third_party/llama.cpp
+          git -C third_party/llama.cpp checkout 85c55223caf0a2ad0d1d88e5a73ab3fe36107867
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
